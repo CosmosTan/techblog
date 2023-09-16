@@ -13,7 +13,7 @@ jobs:
       uses: jenkey2011/vuepress-deploy@master
       env:
         # Repository secret
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        ACCESS_TOKEN: "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"
         TARGET_REPO: TracyIverson/MyBlog
         TARGET_BRANCH: gh_pages
         BUILD_SCRIPT: yarn && yarn build
