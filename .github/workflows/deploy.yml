@@ -14,7 +14,7 @@ jobs:
       env:
         # Repository secret
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        TARGET_REPO: CosmosTan/MyBlog
+        TARGET_REPO: CosmosTan/Myblog
         TARGET_BRANCH: gh_pages
         BUILD_SCRIPT: yarn && yarn build
         BUILD_DIR: docs/.vuepress/dist
