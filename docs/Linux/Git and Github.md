@@ -1,7 +1,7 @@
 *1 [git clone 过慢](https://segmentfault.com/a/1190000039768491)
 
 (1) 打开hosts文件
--   Windows上的hosts文件路径在`C:WindowsSystem32driversetchosts`
+-   Windows上的hosts文件路径在`C:Windows/System32/drivers/etc/hosts`
 -   Linux的hosts文件路径在：`sudo vim /etc/hosts`
 (2)在hosts文件末尾添加两行(对应上面查到的ip)
 ```c
