@@ -1,8 +1,10 @@
 name: Build and Deploy
+
 on: 
   push:
     branches:
       - main  # 或者你的主分支
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -13,20 +15,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # 或者更低版本
+          node-version: '16'  # 或者选择 '14' 或其他兼容版本
 
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: '7.0.0'  # 指定 pnpm 的版本，可以根据需要调整
+      - name: Set NODE_OPTIONS to use OpenSSL legacy provider (for Node.js v17+)
+        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV  # 如果使用 Node.js v17+
 
       - name: Install dependencies
         run: |
-          pnpm install
+          yarn install
 
       - name: Build the site
         run: |
-          pnpm run build
+          yarn build
 
       - name: Deploy to GitHub Pages
         uses: jenkey2011/vuepress-deploy@v1
@@ -34,5 +34,5 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           TARGET_REPO: CosmosTan/techblog
           TARGET_BRANCH: gh_pages
-          BUILD_SCRIPT: pnpm run build
+          BUILD_SCRIPT: yarn && yarn build
           BUILD_DIR: docs/.vuepress/dist
