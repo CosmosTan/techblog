@@ -12,10 +12,11 @@ module.exports = {
         logo: '/img/logo.png',
         nav: [ 
             { text: '首页', link: '/' },
-            { text: 'Python', link: '/Python/' },
-            { text: 'Linux', link: '/Linux/' },
+            { text: 'AI Agent', link: '/AI_Agent/' },
             { text: 'ML', link: '/ML/' },
             { text: 'DL', link: '/DL/' },
+            { text: 'Python', link: '/Python/' },
+            { text: 'Linux', link: '/Linux/' },
             { text: 'github', link: 'https://github.com/CosmosTan/techblog.git/' }
         ],
     }
