@@ -12,5 +12,6 @@
   "devDependencies": {
     "gh-pages": "^6.0.0",
     "vuepress": "^1.9.10"
-  }
+  },
+  "packageManager": "pnpm@7.0.0" 
 }
