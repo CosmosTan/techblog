@@ -1,36 +1,46 @@
 name: Build and Deploy
 
-on: 
+on:
+  # 每当 push 到 main 分支时触发部署
   push:
-    branches:
-      - main  # 或者你的主分支
+    branches: [main]
+  # 手动触发部署
+  workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  Build and Deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
         with:
-          node-version: '16'  # 或者选择 '14' 或其他兼容版本
+          # “最近更新时间” 等 git 日志相关信息，需要拉取全部提交记录
+          fetch-depth: 0
 
-      - name: Set NODE_OPTIONS to use OpenSSL legacy provider (for Node.js v17+)
-        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV  # 如果使用 Node.js v17+
+      - name: 设置 pnpm
+        uses: pnpm/action-setup@v4
 
-      - name: Install dependencies
-        run: |
-          yarn install
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          # 选择要使用的 node 版本
+          node-version: 22
+          # 缓存 pnpm 依赖
+          cache: pnpm
 
-      - name: Build the site
-        run: |
-          yarn build
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
 
-      - name: Deploy to GitHub Pages
-        uses: jenkey2011/vuepress-deploy@v1
+      # 运行构建脚本
+      - name: 构建 VuePress 站点
+        run: pnpm docs:build
+
+      # 查看 workflow 的文档来获取更多信息
+      # @see https://github.com/crazy-max/ghaction-github-pages
+      - name: 部署到 GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v4
         env:
+          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           TARGET_REPO: CosmosTan/techblog
           TARGET_BRANCH: gh_pages
