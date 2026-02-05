@@ -1,6 +1,12 @@
 {
+  "name": "techblog",
+  "private": true,
   "scripts": {
+    "dev": "vuepress dev docs",
     "build": "vuepress build docs"
+  },
+  "devDependencies": {
+    "vuepress": "^1.9.10"
   },
   "packageManager": "pnpm@8.15.0"
 }
