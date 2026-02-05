@@ -10,7 +10,7 @@
     "@vuepress/theme-default": "2.0.0-rc.26"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "packageManager": "pnpm@8.15.0"
 }
