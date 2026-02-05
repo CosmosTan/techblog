@@ -1,50 +1,40 @@
 name: Build and Deploy
 
 on:
-  # Trigger on push to the main branch
   push:
     branches: [main]
-  # Manual trigger for deployment
   workflow_dispatch:
 
+permissions:
+  contents: write   # 允许推送到 gh-pages
+
 jobs:
-  Build_and_Deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          # Fetch all commit history for 'git log'
-          fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Set up pnpm
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 7.0.0  # 指定pnpm版本，确保一致性
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          # Specify the Node.js version to use
-          node-version: 22
-
-      - name: Cache pnpm dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+          version: 8
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build VuePress site
-        run: pnpm docs:build
+      - name: Build VuePress
+        run: pnpm build
 
       - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           TARGET_REPO: CosmosTan/techblog

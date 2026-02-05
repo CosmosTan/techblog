@@ -1,0 +1,110 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "techblog",
+      "version": "1.0.0",
+      "main": "index.js",
+      "license": "MIT",
+      "scripts": {
+        "dev": "vuepress dev docs",
+        "build": "vuepress build docs",
+        "deploy": "gh-pages -d docs/.vuepress/dist",
+        "commit": "yarn build && yarn deploy"
+      },
+      "devDependencies": {
+        "gh-pages": "^6.0.0",
+        "vuepress": "^1.9.10"
+      },
+      "packageManager": "pnpm@7.0.0"
+    },
+    "prefix": "D:\\A_myfile\\01-techStudy\\blog\\techblog"
+  },
+  "2 debug pnpm:context": {
+    "currentLockfileExists": false,
+    "storeDir": "D:\\.pnpm-store\\v3",
+    "virtualStoreDir": "D:\\A_myfile\\01-techStudy\\blog\\techblog\\node_modules\\.pnpm"
+  },
+  "3 debug pnpm:stage": {
+    "prefix": "D:\\A_myfile\\01-techStudy\\blog\\techblog",
+    "stage": "resolution_started"
+  },
+  "4 debug pnpm:request-retry": {
+    "attempt": 1,
+    "error": {
+      "code": "ERR_INVALID_THIS"
+    },
+    "maxRetries": 2,
+    "method": "GET",
+    "timeout": 10000,
+    "url": "https://r.cnpmjs.org/yarn"
+  },
+  "5 debug pnpm:request-retry": {
+    "attempt": 1,
+    "error": {
+      "code": "ERR_INVALID_THIS"
+    },
+    "maxRetries": 2,
+    "method": "GET",
+    "timeout": 10000,
+    "url": "https://r.cnpmjs.org/gh-pages"
+  },
+  "6 debug pnpm:request-retry": {
+    "attempt": 1,
+    "error": {
+      "code": "ERR_INVALID_THIS"
+    },
+    "maxRetries": 2,
+    "method": "GET",
+    "timeout": 10000,
+    "url": "https://r.cnpmjs.org/vuepress"
+  },
+  "7 debug pnpm:request-retry": {
+    "attempt": 2,
+    "error": {
+      "code": "ERR_INVALID_THIS"
+    },
+    "maxRetries": 2,
+    "method": "GET",
+    "timeout": 60000,
+    "url": "https://r.cnpmjs.org/yarn"
+  },
+  "8 debug pnpm:request-retry": {
+    "attempt": 2,
+    "error": {
+      "code": "ERR_INVALID_THIS"
+    },
+    "maxRetries": 2,
+    "method": "GET",
+    "timeout": 60000,
+    "url": "https://r.cnpmjs.org/gh-pages"
+  },
+  "9 debug pnpm:request-retry": {
+    "attempt": 2,
+    "error": {
+      "code": "ERR_INVALID_THIS"
+    },
+    "maxRetries": 2,
+    "method": "GET",
+    "timeout": 60000,
+    "url": "https://r.cnpmjs.org/vuepress"
+  },
+  "10 error pnpm": {
+    "code": "ERR_PNPM_META_FETCH_FAIL",
+    "attempts": 1,
+    "spec": {
+      "fetchSpec": "latest",
+      "name": "yarn",
+      "type": "tag"
+    },
+    "pkgsStack": [],
+    "err": {
+      "name": "pnpm",
+      "message": "GET https://r.cnpmjs.org/yarn: Value of \"this\" must be of type URLSearchParams",
+      "code": "ERR_PNPM_META_FETCH_FAIL",
+      "stack": "pnpm: GET https://r.cnpmjs.org/yarn: Value of \"this\" must be of type URLSearchParams\n    at RetryOperation._fn (C:\\Users\\15215\\AppData\\Local\\pnpm\\.tools\\pnpm\\7.0.0_tmp_3632\\node_modules\\pnpm\\dist\\pnpm.cjs:84251:19)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at runNextTicks (node:internal/process/task_queues:69:3)\n    at listOnTimeout (node:internal/timers:555:9)\n    at process.processTimers (node:internal/timers:529:7)"
+    }
+  }
+}
