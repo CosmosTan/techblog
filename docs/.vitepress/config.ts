@@ -1,9 +1,10 @@
-import { defineUserConfig } from 'vuepress'
-import { defaultTheme } from '@vuepress/theme-default'
+import { defineConfig } from 'vitepress'
 
-export default defineUserConfig({
+export default defineConfig({
   title: 'Cosmos的个人博客',
   description: 'tqy的个人博客',
+
+  // GitHub Pages 子路径
   base: '/techblog/',
 
   head: [
@@ -11,12 +12,10 @@ export default defineUserConfig({
     ['meta', { name: 'keywords', content: '人工智能' }]
   ],
 
-  theme: defaultTheme({
+  themeConfig: {
     logo: '/img/logo.png',
-    repo: 'CosmosTan/techblog',
-    lastUpdatedText: 'Last Updated',
 
-    navbar: [
+    nav: [
       { text: '首页', link: '/' },
       { text: 'AI Agent', link: '/AI_Agent/' },
       { text: 'ML', link: '/ML/' },
@@ -24,9 +23,13 @@ export default defineUserConfig({
       { text: 'Python', link: '/Python/' },
       { text: 'Linux', link: '/Linux/' },
       {
-        text: 'GitHub',
-        link: 'https://github.com/CosmosTan/techblog'
+        text: '知乎',
+        link: 'https://www.zhihu.com/people/jue-di-san-chi-jian-shen-ming'
       }
+    ],
+
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/CosmosTan/techblog' }
     ]
-  })
+  }
 })
