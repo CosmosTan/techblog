@@ -9,7 +9,7 @@
 
 
 ### 4 渐进式披露
-![01](/img/agent/agent-skill-progressive-disclosure.png)
+![01](/img/agent/agent_disclosure.png)
 
 
 ### 5 Agent 和 MCP 的区别
