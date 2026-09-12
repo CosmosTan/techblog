@@ -28,14 +28,6 @@ export default defineConfig({
           { text: '3-Cpython解析', link: '/Python/Cpython解析' }
         ]
       },
-      {
-        text: 'Python', // 下拉列表的名字
-        items: [
-          { text: '1-数据分析', link: '/Python/数据分析/' },
-          { text: '2-应用开发', link: '/Python/Web应用开发/' },
-          { text: '3-Cpython解析', link: '/Python/Cpython解析' }
-        ]
-      },
       { text: 'Linux', link: '/Linux/' },
       {
         text: '知乎',
