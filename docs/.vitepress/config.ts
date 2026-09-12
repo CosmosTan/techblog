@@ -17,6 +17,10 @@ export default defineConfig({
   themeConfig: {
     logo: '/img/logo.png',
 
+    search: {
+      provider: 'local'
+    },
+
     nav: [
       { text: '首页', link: '/' },
       { text: 'AI Agent', link: '/AI_Agent/' },
