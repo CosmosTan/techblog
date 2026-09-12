@@ -7,6 +7,8 @@ export default defineConfig({
   // GitHub Pages 子路径
   base: '/techblog/',
 
+  darkMode: true,
+
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
     ['meta', { name: 'keywords', content: '人工智能' }]
