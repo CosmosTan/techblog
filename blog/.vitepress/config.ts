@@ -23,11 +23,11 @@ export default defineConfig({
 
     nav: [
       { text: '首页', link: '/' },
-      { text: 'Agent', link: '/agent/' },
-      { text: 'ML', link: '/ml/' },
-      { text: 'DL', link: '/dl/' },
-      { text: 'Python', link: '/python/' },
-      { text: 'Guide', link: '/guide/' },
+      { text: '全栈开发', link: '/01-full-stack/' },
+      { text: '智能体', link: '/02-agent/' },
+      { text: '大模型', link: '/03-llm/' },
+      { text: '机器学习', link: '/04-ml-dl/' },
+      { text: '总结', link: '/05-summary/' },
       {
         text: '知乎',
         link: 'https://www.zhihu.com/people/jue-di-san-chi-jian-shen-ming'
