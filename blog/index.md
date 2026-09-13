@@ -192,14 +192,15 @@ const recentPosts = [
 }
 
 .category-card {
-  position: relative;
-  padding: 20px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
   background: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-bg-mute);
   border-radius: 12px;
   text-decoration: none;
   color: inherit;
-  overflow: hidden;
   transition: all 0.3s ease;
 }
 
@@ -210,38 +211,40 @@ const recentPosts = [
 }
 
 .category-icon {
-  font-size: 32px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 36px;
-}
-
-.category-name {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 4px;
-  color: var(--vp-c-text-1);
+  font-size: 28px;
+  flex-shrink: 0;
   line-height: 1.5;
 }
 
-.category-desc {
-  font-size: 12px;
-  color: var(--vp-c-text-3);
-  margin-bottom: 12px;
+.category-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.category-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: var(--vp-c-text-1);
   line-height: 1.4;
+}
+
+.category-desc {
+  font-size: 11px;
+  color: var(--vp-c-text-3);
+  margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 .category-count {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 4px 10px;
-  background: var(--vp-c-bg);
-  border-radius: 12px;
-  font-size: 12px;
-  color: var(--vp-c-text-2);
+  padding: 2px 8px;
+  background: var(--vp-c-brand-soft);
+  border-radius: 10px;
+  font-size: 11px;
+  color: var(--vp-c-brand-1);
 }
 
 .category-count .num {
@@ -408,10 +411,12 @@ const recentPosts = [
       class="category-card"
     >
       <span class="category-icon">{{ cat.icon }}</span>
-      <div class="category-name">{{ cat.name }}</div>
-      <div class="category-desc">{{ cat.desc }}</div>
-      <div class="category-count">
-        <span class="num">{{ cat.count }}</span> 篇
+      <div class="category-content">
+        <div class="category-name">{{ cat.name }}</div>
+        <div class="category-desc">{{ cat.desc }}</div>
+        <div class="category-count">
+          <span class="num">{{ cat.count }}</span> 篇
+        </div>
       </div>
     </a>
   </div>
