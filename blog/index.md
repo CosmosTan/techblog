@@ -195,7 +195,7 @@ const recentPosts = [
   position: relative;
   padding: 20px 16px;
   background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--vp-c-bg-mute);
   border-radius: 12px;
   text-decoration: none;
   color: inherit;
@@ -203,33 +203,19 @@ const recentPosts = [
   transition: all 0.3s ease;
 }
 
-.category-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
 .category-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
-  border-color: transparent;
-}
-
-.category-card:hover::before {
-  transform: scaleX(1);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  border-color: var(--vp-c-brand-2);
 }
 
 .category-icon {
-  font-size: 28px;
+  font-size: 32px;
   margin-bottom: 12px;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
 }
 
 .category-name {
@@ -237,12 +223,14 @@ const recentPosts = [
   font-weight: 600;
   margin-bottom: 4px;
   color: var(--vp-c-text-1);
+  line-height: 1.5;
 }
 
 .category-desc {
   font-size: 12px;
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-text-3);
   margin-bottom: 12px;
+  line-height: 1.4;
 }
 
 .category-count {
@@ -407,7 +395,7 @@ const recentPosts = [
 <div class="categories-section">
   <div class="section-header">
     <h2 class="section-title">📂 技术分类</h2>
-    <a href="/06-dashboard/" class="section-link">
+    <a href="/techblog/06-dashboard/" class="section-link">
       查看全部 → 
     </a>
   </div>
@@ -460,7 +448,7 @@ const recentPosts = [
 <div class="dashboard-cta">
   <h3 class="cta-title">📊 数据看板</h3>
   <p class="cta-desc">查看博客统计、学习历程与贡献热力图</p>
-  <a href="/06-dashboard/" class="cta-button">
+  <a href="/techblog/06-dashboard/" class="cta-button">
     打开看板 →
   </a>
 </div>

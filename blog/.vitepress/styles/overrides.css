@@ -1,0 +1,22 @@
+/* Fix emoji + text overlap in navigation */
+.VPNavBarTitle .title {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+/* Nav item text with emoji - prevent inline alignment issues */
+.VPNavBarMenu .VPNavBarMenuLink,
+.VPNavBarMenu .VPNavBarMenuGroup .button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+}
+
+/* Ensure emoji and text don't wrap differently */
+.VPNavBarMenu .VPNavBarMenuLink span,
+.VPNavBarMenu .VPNavBarMenuGroup .button span {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
