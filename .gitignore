@@ -3,3 +3,7 @@ node_modules
 .vitepress/cache
 .superpowers
 .venv
+docs
+.claude
+blog/.vitepress/dist
+blog/.vitepress/cache
