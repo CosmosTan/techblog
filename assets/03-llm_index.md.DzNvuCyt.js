@@ -1,1 +1,0 @@
-import{_ as e,o as t,c as a}from"./chunks/framework.DFzRwoE6.js";const p=JSON.parse('{"title":"大模型","description":"","frontmatter":{"layout":"page","title":"大模型"},"headers":[],"relativePath":"03-llm/index.md","filePath":"03-llm/index.md"}'),n={name:"03-llm/index.md"};function o(r,s,c,i,l,d){return t(),a("div")}const _=e(n,[["render",o]]);export{p as __pageData,_ as default};
