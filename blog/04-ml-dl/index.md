@@ -14,16 +14,19 @@ const topics = [
 
 <style scoped>
 .page-header {
-  text-align: center;
-  padding: 40px 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 32px 24px;
   background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
   border-radius: 16px;
   margin-bottom: 32px;
   color: white;
 }
-.page-header .emoji { font-size: 64px; margin-bottom: 16px; }
-.page-header h1 { font-size: 32px; margin-bottom: 8px; color: white; }
-.page-header p { font-size: 16px; opacity: 0.9; margin: 0; }
+.page-header .emoji { font-size: 48px; flex-shrink: 0; }
+.page-header-content { flex: 1; }
+.page-header h1 { font-size: 28px; margin: 0 0 8px 0; color: white; }
+.page-header p { font-size: 15px; opacity: 0.9; margin: 0; color: rgba(255,255,255,0.9); }
 
 .content-wrapper { max-width: 1000px; margin: 0 auto; }
 
@@ -64,8 +67,10 @@ const topics = [
 
 <div class="page-header">
   <div class="emoji">📊</div>
-  <h1>机器学习与深度学习</h1>
-  <p>算法原理、模型构建与实践应用</p>
+  <div class="page-header-content">
+    <h1>机器学习与深度学习</h1>
+    <p>算法原理、模型构建与实践应用</p>
+  </div>
 </div>
 
 <div class="topics-grid">

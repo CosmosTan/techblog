@@ -34,8 +34,10 @@ const subcategories = ref([
 
 <style scoped>
 .page-header {
-  text-align: center;
-  padding: 40px 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 32px 24px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 16px;
   margin-bottom: 32px;
@@ -43,20 +45,25 @@ const subcategories = ref([
 }
 
 .page-header .emoji {
-  font-size: 64px;
-  margin-bottom: 16px;
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.page-header-content {
+  flex: 1;
 }
 
 .page-header h1 {
-  font-size: 32px;
-  margin-bottom: 8px;
+  font-size: 28px;
+  margin: 0 0 8px 0;
   color: white;
 }
 
 .page-header p {
-  font-size: 16px;
+  font-size: 15px;
   opacity: 0.9;
   margin: 0;
+  color: rgba(255,255,255,0.9);
 }
 
 .content-wrapper {
@@ -242,8 +249,10 @@ const subcategories = ref([
 
 <div class="page-header">
   <div class="emoji">💻</div>
-  <h1>全栈开发</h1>
-  <p>涵盖前后端开发、DevOps、数据库与工具链</p>
+  <div class="page-header-content">
+    <h1>全栈开发</h1>
+    <p>涵盖前后端开发、DevOps、数据库与工具链</p>
+  </div>
 </div>
 
 <div v-for="sub in subcategories" :key="sub.id" class="subcategory">
