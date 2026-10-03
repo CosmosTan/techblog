@@ -1,3 +1,9 @@
+---
+title: Git & GitHub 笔记
+---
+
+# Git & GitHub 笔记
+
 *1 [git clone 过慢](https://segmentfault.com/a/1190000039768491)
 
 (1) 打开hosts文件

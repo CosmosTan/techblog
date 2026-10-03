@@ -1,24 +1,34 @@
 :root {
-  --vp-c-brand-1: #4a4a8a;      /* Softer purple - primary */
-  --vp-c-brand-2: #6a6aaa;       /* Lighter purple */
-  --vp-c-brand-3: #00b89c;       /* Teal accent */
-  --vp-c-brand-soft: rgba(74, 74, 138, 0.1);
+  /* 强调色取自站内水墨画的落日 */
+  --vp-c-brand-1: #9c4a27;
+  --vp-c-brand-2: #b05c33;
+  --vp-c-brand-3: #c97a4d;
+  --vp-c-brand-soft: rgba(156, 74, 39, 0.14);
 
-  --vp-c-bg: #ffffff;            /* Clean white background */
-  --vp-c-bg-soft: #f8f9fa;
-  --vp-c-bg-mute: #eef0f2;
+  --vp-c-bg: #ffffff;
+  --vp-c-bg-soft: #f8f7f4;
+  --vp-c-bg-mute: #f0eee9;
+  --vp-c-divider: #e8e5df;
+  --vp-c-border: #d9d5cd;
 
-  --vp-c-text-1: #2d2d3d;        /* Dark gray text */
-  --vp-c-text-2: #5a5a6a;        /* Medium gray */
-  --vp-c-text-3: #8a8a9a;        /* Light gray */
+  --vp-c-text-1: #24262b;
+  --vp-c-text-2: #5d5f64;
+  --vp-c-text-3: #96989d;
 }
 
 .dark {
-  --vp-c-bg: #1a1a2e;            /* Deep dark background */
-  --vp-c-bg-soft: #252545;
-  --vp-c-bg-mute: #303055;
+  --vp-c-brand-1: #d99a72;
+  --vp-c-brand-2: #e2a987;
+  --vp-c-brand-3: #eab89c;
+  --vp-c-brand-soft: rgba(217, 154, 114, 0.16);
 
-  --vp-c-text-1: #e8e8f0;        /* Light text */
-  --vp-c-text-2: #b0b0c0;        /* Medium light */
-  --vp-c-text-3: #808090;        /* Muted light */
+  --vp-c-bg: #16171b;
+  --vp-c-bg-soft: #1d1f24;
+  --vp-c-bg-mute: #26282e;
+  --vp-c-divider: #2f3138;
+  --vp-c-border: #3a3c44;
+
+  --vp-c-text-1: #d9d6cf;
+  --vp-c-text-2: #a3a09a;
+  --vp-c-text-3: #716f69;
 }

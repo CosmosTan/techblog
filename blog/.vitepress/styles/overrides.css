@@ -1,22 +1,152 @@
-/* Fix emoji + text overlap in navigation */
-.VPNavBarTitle .title {
+:root {
+  --font-display: Georgia, 'Times New Roman', 'Noto Serif SC', 'Source Han Serif SC',
+    'Songti SC', 'STSong', 'SimSun', serif;
+}
+
+/* 文章页标题与全站展示标题共用衬线 */
+.vp-doc h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.notes {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 8px 24px 72px;
+}
+
+.site-head h1.site-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 1.2;
+  margin: 24px 0 14px;
+}
+
+.site-head .intro {
+  font-size: 16px;
+  color: var(--vp-c-text-2);
+  margin: 0 0 8px;
+}
+
+.site-head .quote {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  color: var(--vp-c-text-3);
+  margin: 0;
+}
+
+.frontispiece {
+  margin: 32px 0 0;
+}
+
+.frontispiece p {
+  margin: 0;
+}
+
+.frontispiece img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.page-head {
+  margin-top: 20px;
+}
+
+.page-head h1.page-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.3;
+  margin: 0 0 10px;
+}
+
+.page-head .meta {
+  margin: 0;
+  font-size: 14.5px;
+  color: var(--vp-c-text-2);
+}
+
+.section {
+  margin-top: 44px;
+}
+
+.section h2.sec-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 22px;
+  margin: 0 0 6px;
+  border: none;
+  padding: 0;
+}
+
+.toc-year {
+  font-family: var(--font-display);
+  font-size: 19px;
+  color: var(--vp-c-text-2);
+  margin: 34px 0 2px;
+}
+
+.group-h {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  margin: 32px 0 2px;
+}
+
+.group-desc {
+  font-size: 13px;
+  color: var(--vp-c-text-3);
+  margin: 0 0 6px;
+}
+
+.toc-row {
   display: flex;
-  align-items: center;
-  gap: 0;
+  align-items: baseline;
+  padding: 9px 0;
+  text-decoration: none;
 }
 
-/* Nav item text with emoji - prevent inline alignment issues */
-.VPNavBarMenu .VPNavBarMenuLink,
-.VPNavBarMenu .VPNavBarMenuGroup .button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0;
+.toc-row .toc-title {
+  color: var(--vp-c-text-1);
+  font-size: 15.5px;
+  transition: color 0.15s ease;
 }
 
-/* Ensure emoji and text don't wrap differently */
-.VPNavBarMenu .VPNavBarMenuLink span,
-.VPNavBarMenu .VPNavBarMenuGroup .button span {
-  display: inline-flex;
-  align-items: center;
+.toc-row:hover .toc-title {
+  color: var(--vp-c-brand-1);
+}
+
+.toc-dots {
+  flex: 1;
+  min-width: 28px;
+  border-bottom: 1px dotted var(--vp-c-text-3);
+  margin: 0 12px;
+  position: relative;
+  top: -3px;
+  opacity: 0.75;
+}
+
+.toc-meta {
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  color: var(--vp-c-text-3);
   white-space: nowrap;
+}
+
+.empty-note {
+  font-size: 14.5px;
+  color: var(--vp-c-text-2);
+  margin: 14px 0 0;
+}
+
+@media (max-width: 640px) {
+  .site-head h1.site-title {
+    font-size: 33px;
+  }
+
+  .page-head h1.page-title {
+    font-size: 28px;
+  }
 }
