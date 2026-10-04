@@ -18,6 +18,4 @@ title: 智能体
   </a>
 </nav>
 
-<p class="empty-note">计划中：MCP 协议、多智能体协作。</p>
-
 </div>
