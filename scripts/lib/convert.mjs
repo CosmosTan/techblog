@@ -55,6 +55,8 @@ function replaceWikilinks(text, resolve, warnings) {
   })
 }
 
+const CALLOUT = /^(\s{0,3}>\s?)\[!(\w+)\][+-]?\s?/
+
 export function convertNote(md, resolve) {
   const warnings = []
   const fence = /^(\s{0,3})(```+|~~~+)/
@@ -67,7 +69,9 @@ export function convertNote(md, resolve) {
         return line
       }
       if (inFence) return line
-      return splitInlineCode(line)
+      return splitInlineCode(
+        CALLOUT.test(line) ? line.replace(CALLOUT, '$1').trimEnd() : line
+      )
         .map((seg) => (seg.protected ? seg.text : replaceWikilinks(seg.text, resolve, warnings)))
         .join('')
     })

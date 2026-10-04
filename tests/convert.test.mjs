@@ -105,6 +105,22 @@ test('note transclusion degrades to title text with warning', () => {
   assert.equal(warnings.length, 1)
 })
 
+test('callout header degrades to plain blockquote with title kept', () => {
+  const md = '> [!note] 标题在这里\n> 正文第一行\n> 正文第二行'
+  const { md: out } = convertNote(md, makeResolve({}))
+  assert.equal(out, '> 标题在这里\n> 正文第一行\n> 正文第二行')
+})
+
+test('callout with fold marker and no title keeps nothing on header line', () => {
+  const { md: out } = convertNote('> [!tip]- \n> 内容', makeResolve({}))
+  assert.equal(out, '>\n> 内容')
+})
+
+test('non-callout blockquote is untouched', () => {
+  const { md: out } = convertNote('> 普通引用 [^1]', makeResolve({}))
+  assert.equal(out, '> 普通引用 [^1]')
+})
+
 test('non-embed link to a known asset links to the asset url', () => {
   const { md: out } = convertNote(
     '![01-http-request-response.png]] 的链接见 [[01-http-request-response.png]]',
