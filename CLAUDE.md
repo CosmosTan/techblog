@@ -12,7 +12,13 @@ This is a VitePress static blog deployed to GitHub Pages at base path `/techblog
 pnpm dev        # Start dev server with hot reload (http://localhost:5173)
 pnpm build      # Build for production
 pnpm preview    # Preview production build locally
+pnpm sync       # Sync publish:true notes from Obsidian vault → blog, regenerate index pages, build-check, commit & push (--no-push for dry run)
+pnpm test       # Run sync pipeline unit tests (node --test)
 ```
+
+## Obsidian Sync
+
+`pnpm sync` one-way publishes notes marked `publish: true` from the Obsidian vault (read-only). It regenerates the home/category/archive index pages — those pages are generated artifacts; hand edits will be overwritten (see `docs/adr/0001-index-pages-as-generated-artifacts.md`, local). Hand-published articles live in the `CURATED` seed list inside `scripts/sync-obsidian.mjs`.
 
 ## Architecture
 

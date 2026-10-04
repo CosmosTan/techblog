@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { execFileSync } from 'node:child_process'
+import { execFileSync, spawnSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -124,13 +124,12 @@ const addPaths = [
 
 if (addPaths.length > 0) execFileSync('git', ['add', '--', ...addPaths], { cwd: BLOG_ROOT })
 
-const staged = execFileSync('git', ['status', '--porcelain'], { cwd: BLOG_ROOT, encoding: 'utf8' })
-if (staged.trim() === '') {
+if (spawnSync('git', ['diff', '--cached', '--quiet'], { cwd: BLOG_ROOT }).status === 0) {
   console.log('没有需要同步的变更。')
   process.exit(0)
 }
 
-execFileSync('git', ['commit', '-m', `sync: obsidian publish ${new Date().toISOString().slice(0, 10)} (${plan.upserts.length} upsert, ${plan.deletions.length} delete)`], { cwd: BLOG_ROOT, stdio: 'inherit' })
+execFileSync('git', ['commit', '-m', `chore(sync): obsidian publish ${new Date().toISOString().slice(0, 10)} (${plan.upserts.length} upsert, ${plan.deletions.length} delete)`], { cwd: BLOG_ROOT, stdio: 'inherit' })
 
 if (NO_PUSH) {
   console.log('--no-push: 已提交,未推送。')
