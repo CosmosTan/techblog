@@ -5,10 +5,14 @@
   "scripts": {
     "dev": "vitepress dev blog",
     "build": "vitepress build blog",
-    "preview": "vitepress preview blog"
+    "preview": "vitepress preview blog",
+    "sync": "node scripts/sync-obsidian.mjs",
+    "test": "node --test tests/"
   },
   "devDependencies": {
-    "vitepress": "^1.6.4"
+    "gray-matter": "^4.0.3",
+    "vitepress": "^1.6.4",
+    "yaml": "^2.9.1"
   },
   "engines": {
     "node": ">=18"
