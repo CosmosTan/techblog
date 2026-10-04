@@ -4,15 +4,15 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { buildPublishSet } from './lib/collect.mjs'
-import { planSync } from './lib/plan.mjs'
+import { planSync, filterDeletions } from './lib/plan.mjs'
 import { renderIndexPages } from './lib/pages.mjs'
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url))
-const BLOG_ROOT = join(SCRIPT_DIR, '..')
-const VAULT = 'D:/A_myfile/myObsidian/obsidian/C_Skills'
-const VAULT_REPO = 'D:/A_myfile/myObsidian/obsidian'
+const BLOG_ROOT = process.env.SYNC_BLOG_ROOT ?? join(SCRIPT_DIR, '..')
+const VAULT = process.env.SYNC_VAULT ?? 'D:/A_myfile/myObsidian/obsidian/C_Skills'
+const VAULT_REPO = process.env.SYNC_VAULT_REPO ?? 'D:/A_myfile/myObsidian/obsidian'
 const PUBLIC = join(BLOG_ROOT, 'blog', 'public')
-const MANIFEST_PATH = join(SCRIPT_DIR, 'sync-manifest.json')
+const MANIFEST_PATH = join(BLOG_ROOT, 'scripts', 'sync-manifest.json')
 
 const MAPPING = {
   '0-AI 全栈': '01-full-stack',
@@ -53,6 +53,7 @@ function gitFirstDate(absPath) {
 
 const { entries, skipped, copiedAssets, collisionList } = buildPublishSet({
   vaultRoot: VAULT,
+  repoRoot: VAULT_REPO,
   mapping: MAPPING,
   publicRoot: PUBLIC,
   dateFallback: gitFirstDate,
@@ -78,7 +79,8 @@ for (const e of plan.upserts) {
   writeFileSync(dest, e.md)
   console.log(`写入: ${e.target}`)
 }
-for (const d of plan.deletions) {
+const safeDeletions = filterDeletions(plan.deletions, entries)
+for (const d of safeDeletions) {
   rmSync(join(BLOG_ROOT, 'blog', d.target), { force: true })
   rmSync(join(BLOG_ROOT, d.assetsDir), { recursive: true, force: true })
   console.log(`删除: ${d.target}`)
@@ -90,7 +92,16 @@ const pages = renderIndexPages({
   synced: entries.map(({ title, date, url, category }) => ({ title, date, url, category })),
 })
 for (const [rel, content] of Object.entries(pages)) {
-  writeFileSync(join(BLOG_ROOT, rel), content)
+  const dest = join(BLOG_ROOT, rel)
+  mkdirSync(dirname(dest), { recursive: true })
+  writeFileSync(dest, content)
+}
+
+if (NO_BUILD) {
+  console.log('--no-build: 跳过构建校验')
+} else {
+  console.log('构建校验中(vitepress build)…')
+  execFileSync('pnpm', ['build'], { cwd: BLOG_ROOT, stdio: 'inherit', shell: true })
 }
 
 const notes = {}
@@ -107,20 +118,13 @@ for (const e of entries) {
 }
 writeFileSync(MANIFEST_PATH, JSON.stringify({ notes }, null, 2) + '\n')
 
-if (NO_BUILD) {
-  console.log('--no-build: 跳过构建校验')
-} else {
-  console.log('构建校验中(vitepress build)…')
-  execFileSync('pnpm', ['build'], { cwd: BLOG_ROOT, stdio: 'inherit', shell: true })
-}
-
 const addPaths = [
   ...plan.upserts.map((e) => `blog/${e.target}`),
   ...plan.upserts.map((e) => join('blog', e.assetsDir)),
-  ...plan.deletions.flatMap((d) => [`blog/${d.target}`, join('blog', d.assetsDir)]),
+  ...safeDeletions.flatMap((d) => [`blog/${d.target}`, join('blog', d.assetsDir)]),
   ...Object.keys(pages),
-  join(SCRIPT_DIR, 'sync-manifest.json'),
-].filter((p) => existsSync(join(BLOG_ROOT, p)) || plan.deletions.some((d) => p === `blog/${d.target}` || p === join('blog', d.assetsDir)))
+  join(BLOG_ROOT, 'scripts', 'sync-manifest.json'),
+].filter((p) => existsSync(join(BLOG_ROOT, p)) || safeDeletions.some((d) => p === `blog/${d.target}` || p === join('blog', d.assetsDir)))
 
 if (addPaths.length > 0) execFileSync('git', ['add', '--', ...addPaths], { cwd: BLOG_ROOT })
 
@@ -134,8 +138,9 @@ execFileSync('git', ['commit', '-m', `chore(sync): obsidian publish ${new Date()
 if (NO_PUSH) {
   console.log('--no-push: 已提交,未推送。')
 } else {
-  execFileSync('git', ['push', 'origin', 'main'], { cwd: BLOG_ROOT, stdio: 'inherit' })
-  console.log('已推送,等待 GitHub Pages 部署。')
+  const branch = execFileSync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], { cwd: BLOG_ROOT, encoding: 'utf8' }).trim()
+  execFileSync('git', ['push', 'origin', branch], { cwd: BLOG_ROOT, stdio: 'inherit' })
+  console.log(`已推送 origin/${branch},等待 GitHub Pages 部署。`)
 }
 
 if (copiedAssets.length > 0) console.log(`附件复制 ${copiedAssets.length} 个。`)

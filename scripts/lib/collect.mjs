@@ -21,7 +21,7 @@ function walkMd(root) {
   return out
 }
 
-export function buildPublishSet({ vaultRoot, mapping, publicRoot, dateFallback }) {
+export function buildPublishSet({ vaultRoot, repoRoot, mapping, publicRoot, dateFallback }) {
   const files = walkMd(vaultRoot)
   const candidates = []
   const skipped = []
@@ -39,14 +39,21 @@ export function buildPublishSet({ vaultRoot, mapping, publicRoot, dateFallback }
     candidates.push({ abs, rel, data: parsed.data, content: parsed.content, category, name, slug: slugify(name) })
   }
 
-  const slugKey = (c) => `${c.category}/${c.slug}`
-  const collisions = new Map()
+  const nameGroups = new Map()
   for (const c of candidates) {
-    const k = slugKey(c)
-    if (!collisions.has(k)) collisions.set(k, [])
-    collisions.get(k).push(c)
+    if (!nameGroups.has(c.name)) nameGroups.set(c.name, [])
+    nameGroups.get(c.name).push(c)
   }
-  const collisionList = [...collisions.entries()].filter(([, v]) => v.length > 1)
+  const slugGroups = new Map()
+  for (const c of candidates) {
+    const k = `${c.category}/${c.slug}`
+    if (!slugGroups.has(k)) slugGroups.set(k, [])
+    slugGroups.get(k).push(c)
+  }
+  const collisionList = [
+    ...[...nameGroups.entries()].filter(([, v]) => v.length > 1),
+    ...[...slugGroups.entries()].filter(([, v]) => v.length > 1),
+  ]
 
   const linkMap = new Map(
     candidates.map((c) => [c.name, { type: 'internal', url: `/techblog/${c.category}/${c.slug}.html` }])
@@ -56,7 +63,7 @@ export function buildPublishSet({ vaultRoot, mapping, publicRoot, dateFallback }
   const copiedAssets = []
   for (const c of candidates) {
     const resolver = makeAssetResolver({
-      searchRoots: [vaultRoot],
+      searchRoots: repoRoot ? [vaultRoot, repoRoot] : [vaultRoot],
       destDir: join(publicRoot, 'img', 'notes', c.slug),
       urlPrefix: `/img/notes/${c.slug}`,
     })
@@ -69,7 +76,8 @@ export function buildPublishSet({ vaultRoot, mapping, publicRoot, dateFallback }
     }
     const { md: body, warnings } = convertNote(c.content, wrapped)
     const title = c.data.title ?? c.name
-    const date = toYMD(c.data.date ?? c.data.created ?? dateFallback(c.abs))
+    const rawDate = c.data.date ?? c.data.created ?? dateFallback(c.abs)
+    const date = toYMD(rawDate || new Date())
     const md = renderFrontmatter({
       title,
       date,

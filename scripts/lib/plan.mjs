@@ -22,3 +22,8 @@ export function planSync(desiredEntries, manifest) {
 
   return { upserts, deletions }
 }
+
+export function filterDeletions(deletions, desiredEntries) {
+  const ownedDirs = new Set(desiredEntries.map((e) => e.assetsDir))
+  return deletions.filter((d) => !ownedDirs.has(d.assetsDir))
+}

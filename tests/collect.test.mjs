@@ -47,6 +47,63 @@ test('collects only publish:true notes, skips unmapped with warning', () => {
   }
 })
 
+test('attachment outside vault root but inside repo root resolves (orchestrator wiring)', () => {
+  const f = fakeVault()
+  const outside = join(f.root, '..', 'attachments-outer-test')
+  try {
+    mkdirSync(outside, { recursive: true })
+    writeFileSync(join(outside, 'outer.png'), 'PNG')
+    writeFileSync(
+      join(f.root, '1-Harness', '带外图笔记.md'),
+      '---\npublish: true\ntitle: 带外图笔记\n---\n\n![[outer.png]]\n'
+    )
+    const r = buildPublishSet({
+      vaultRoot: f.root,
+      repoRoot: outside,
+      mapping: MAPPING,
+      publicRoot: f.publicDir,
+      dateFallback: () => '2020-01-01',
+    })
+    const e = r.entries.find((x) => x.title === '带外图笔记')
+    assert.match(e.md, /!\[outer\]\(\/img\/notes\/带外图笔记\/outer\.png\)/)
+  } finally {
+    rmSync(f.root, { recursive: true, force: true })
+    rmSync(f.publicDir, { recursive: true, force: true })
+    rmSync(outside, { recursive: true, force: true })
+  }
+})
+
+test('same basename published in different categories is a collision, not silent last-wins', () => {
+  const root = mkdtempSync(join(tmpdir(), 'sync-vault-'))
+  const publicDir = mkdtempSync(join(tmpdir(), 'sync-pub-'))
+  try {
+    mkdirSync(join(root, '0-AI 全栈'), { recursive: true })
+    mkdirSync(join(root, '1-Harness'), { recursive: true })
+    writeFileSync(join(root, '0-AI 全栈', '同名.md'), '---\npublish: true\n---\n\nA\n')
+    writeFileSync(join(root, '1-Harness', '同名.md'), '---\npublish: true\n---\n\nB\n')
+    const r = buildPublishSet({ vaultRoot: root, mapping: MAPPING, publicRoot: publicDir, dateFallback: () => '2020-01-01' })
+    assert.equal(r.collisionList.length, 1)
+  } finally {
+    rmSync(root, { recursive: true, force: true })
+    rmSync(publicDir, { recursive: true, force: true })
+  }
+})
+
+test('note never committed to git gets today as final date fallback', () => {
+  const root = mkdtempSync(join(tmpdir(), 'sync-vault-'))
+  const publicDir = mkdtempSync(join(tmpdir(), 'sync-pub-'))
+  try {
+    mkdirSync(join(root, '1-Harness'), { recursive: true })
+    writeFileSync(join(root, '1-Harness', '新笔记.md'), '---\npublish: true\n---\n\n内容\n')
+    const r = buildPublishSet({ vaultRoot: root, mapping: MAPPING, publicRoot: publicDir, dateFallback: () => '' })
+    const e = r.entries.find((x) => x.title === '新笔记')
+    assert.equal(e.date, new Date().toISOString().slice(0, 10))
+  } finally {
+    rmSync(root, { recursive: true, force: true })
+    rmSync(publicDir, { recursive: true, force: true })
+  }
+})
+
 test('wikilinks between published notes resolve to internal urls', () => {
   const f = fakeVault()
   try {
