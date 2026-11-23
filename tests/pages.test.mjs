@@ -58,8 +58,9 @@ test('home lists recent updates and category counts', () => {
   assert.match(md, /大模型[\s\S]*?0 篇/)
 })
 
-test('empty category page renders zero-count without entries', () => {
+test('empty category page renders zero-count with empty note, without entries', () => {
   const { 'blog/03-llm/index.md': md } = renderIndexPages({ curated: [], synced: [] })
   assert.match(md, /共 0 篇/)
+  assert.match(md, /empty-note">这一类还没有文章/)
   assert.doesNotMatch(md, /toc-row/)
 })

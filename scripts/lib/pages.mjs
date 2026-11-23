@@ -72,7 +72,9 @@ ${CATEGORIES.map((c) => {
 
   for (const c of CATEGORIES) {
     const items = all.filter((a) => a.category === c.id)
-    const body = items.map((a) => row(a.url, a.title, month(a.date))).join('\n')
+    const body = items.length
+      ? items.map((a) => row(a.url, a.title, month(a.date))).join('\n')
+      : `  <p class="empty-note">这一类还没有文章。</p>`
     pages[`blog/${c.id}/index.md`] = `---
 layout: page
 title: ${c.title}

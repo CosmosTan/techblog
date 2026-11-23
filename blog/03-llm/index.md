@@ -11,7 +11,7 @@ title: 大模型
 </header>
 
 <nav class="toc">
-
+  <p class="empty-note">这一类还没有文章。</p>
 </nav>
 
 </div>

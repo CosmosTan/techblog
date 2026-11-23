@@ -2,7 +2,9 @@
 title: Linux 环境与工具笔记
 ---
 
-# 一、 Linux 
+# Linux 环境与工具笔记
+
+## 一、Linux
 
 
 
@@ -58,12 +60,10 @@ continuumio/miniconda3 /bin/bash
 |d|离开会话返回shell（与tmux detach功能相同）|
 |Ctrl+z|挂起会话，返回shell|
 
-# 二、VIm
+## 二、Vim
 vim 字符串替换
 
-eeee
-
-# 三、windowds
+## 三、Windows
 
 hosts文件：
 ```shell

@@ -1,8 +1,27 @@
 import { defineConfig } from 'vitepress'
 
+// MiniSearch 默认按空白/标点分词，中文整句成一个 token 导致搜索失效。
+// 这里对 CJK 连续段做二元（bigram）切分，拉丁词按词切分。
+const tokenize = (text: string): string[] => {
+  const tokens: string[] = []
+  for (const w of text.split(/[^A-Za-z0-9一-鿿]+/)) {
+    if (!w) continue
+    if (/^[A-Za-z0-9]+$/.test(w)) {
+      tokens.push(w.toLowerCase())
+    } else if (w.length === 1) {
+      tokens.push(w)
+    } else {
+      for (let i = 0; i < w.length - 1; i++) tokens.push(w.slice(i, i + 2))
+    }
+  }
+  return tokens
+}
+
 export default defineConfig({
   title: 'Cosmos的个人博客',
   description: '全栈开发、智能体与机器学习的学习笔记',
+
+  lang: 'zh-CN',
 
   // GitHub Pages 子路径
   base: '/techblog/',
@@ -10,7 +29,8 @@ export default defineConfig({
   appearance: true,
 
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    // head 里的绝对路径不会自动加 base，需手写子路径
+    ['link', { rel: 'icon', href: '/techblog/favicon.ico' }],
     ['meta', { name: 'keywords', content: 'Linux, Python, Agent, 机器学习' }]
   ],
 
@@ -18,7 +38,25 @@ export default defineConfig({
     logo: '/img/logo.png',
 
     search: {
-      provider: 'local'
+      provider: 'local',
+      options: {
+        miniSearch: {
+          options: { tokenize }
+        }
+      }
+    },
+
+    // 文章正文多用 ### 级标题，默认只收 h2 会导致「本页目录」为空
+    outline: { level: [2, 3], label: '本页目录' },
+
+    skipToContentLabel: '跳到正文',
+
+    // SPA 内部路由跳到不存在页面时兜底（静态托管缺失路径由 404.md 承担）
+    notFound: {
+      title: '页面不存在',
+      quote: '走错了也没关系，换个方向继续逛。',
+      linkText: '回到首页',
+      linkLabel: '回到首页'
     },
 
     nav: [

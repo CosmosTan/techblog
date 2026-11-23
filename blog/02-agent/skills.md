@@ -2,19 +2,19 @@
 title: Agent Skill 笔记
 ---
 
-# Agent skill
+# Agent Skill 笔记
 
-### 1 概念
+## 概念
 
-### 2 基本使用
-
-
-### 3 高级使用
+## 基本使用
 
 
-### 4 渐进式披露
-![01](/img/agent/agent_disclosure.png)
+## 高级使用
 
 
-### 5 Agent 和 MCP 的区别
+## 渐进式披露
 
+![渐进式披露的三层结构](/img/agent/agent_disclosure.png)
+
+
+## Agent 和 MCP 的区别
